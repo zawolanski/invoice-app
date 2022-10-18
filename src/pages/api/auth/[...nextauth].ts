@@ -1,5 +1,4 @@
 import NextAuth, { type NextAuthOptions } from 'next-auth';
-import DiscordProvider from 'next-auth/providers/discord';
 
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
@@ -16,11 +15,8 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
-  providers: [
-    // ...add more providers here
-  ],
+  providers: [],
 };
 
 export default NextAuth(authOptions);
