@@ -1,9 +1,16 @@
 import type { NextPage } from 'next';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import { trpc } from '../utils/trpc';
 
 const Home: NextPage = () => {
   const hello = trpc.useQuery(['example.hello', { text: 'from tRPC' }]);
+  const data = trpc.useQuery(['example.getAll']);
+  const { data: session, status } = useSession();
+
+  if (status === 'loading') {
+    return <h1>Loading</h1>;
+  }
 
   return (
     <>
@@ -17,6 +24,21 @@ const Home: NextPage = () => {
         <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
           Create <span className="text-purple-300">T3</span> App
         </h1>
+        {status === 'authenticated' ? (
+          <>
+            <p>Signed in as {session?.user?.email}</p>
+            <button className="bg-red-500 p-1" onClick={() => signOut()}>
+              Sign out
+            </button>
+          </>
+        ) : (
+          <button className="bg-green-600 p-1" onClick={() => signIn()}>
+            Sign in
+          </button>
+        )}
+        {data.isLoading
+          ? 'Loading...'
+          : data.data?.map((d) => <p className="m-3" key={d.id}>{`${d.id} | ${d.name}`}</p>)}
         <p className="text-2xl text-gray-700">This stack uses:</p>
         <div className="mt-3 grid gap-3 pt-3 text-center md:grid-cols-2 lg:w-2/3">
           <TechnologyCard
