@@ -9,11 +9,13 @@ import type { AppRouter } from '../server/router';
 import type { Session } from 'next-auth';
 import '../styles/globals.css';
 import { ThemeProvider } from 'next-themes';
+import HeadLayout from '../components/HeadLayout';
 
 const MyApp: AppType<{ session: Session | null }> = ({ Component, pageProps: { session, ...pageProps } }) => {
   return (
     <SessionProvider session={session}>
       <ThemeProvider attribute="class">
+        <HeadLayout />
         <Component {...pageProps} />
       </ThemeProvider>
     </SessionProvider>
