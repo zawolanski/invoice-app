@@ -10,26 +10,26 @@ const Header = () => {
   const { data: session, status } = useSession();
 
   return (
-    <header className="sticky flex h-16 justify-between	 bg-menu dark:bg-menu-dark">
-      <div className="relative h-full w-16">
-        <Image src={logo} alt="" />
+    <header className="sticky flex h-16 justify-between	rounded-tr-3xl bg-menu dark:bg-menu-dark md:h-screen md:w-24 md:flex-col md:items-center md:justify-between md:rounded-tr-[26px] md:rounded-br-[26px]">
+      <div className="relative h-full w-16 md:h-24 md:w-full">
+        <Image src={logo} alt="" className="h-full w-full" />
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center md:w-full md:flex-col md:items-center">
         <button
           type="button"
-          className="mx-6 flex h-8 w-8 items-center justify-center transition-transform hover:scale-110"
+          className="mx-6 flex h-8 w-8 items-center justify-center md:my-6 "
           onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
         >
           {resolvedTheme === 'light' ? (
-            <MoonIcon className="h-7 w-7 text-typography-purple" />
+            <MoonIcon className="h-7 w-7 text-typography-purple transition-colors hover:text-typography-gray" />
           ) : (
-            <SunIcon className="h-7 w-7 text-typography-purple" />
+            <SunIcon className="h-7 w-7 text-typography-purple transition-colors hover:text-typography-gray" />
           )}
         </button>
-        <div className="h-full w-px bg-border"></div>
+        <div className="h-full w-px bg-border md:h-px md:w-full"></div>
         {status === 'authenticated' ? (
           <button
-            className="relative mx-6 flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-border"
+            className="relative mx-6 flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-border md:my-6"
             onClick={() => signOut()}
           >
             {session?.user?.image ? (
@@ -39,7 +39,7 @@ const Header = () => {
             )}
           </button>
         ) : (
-          <button type="button" className="mx-6" onClick={() => signIn()}>
+          <button type="button" className="mx-6 md:my-6" onClick={() => signIn()}>
             Sign in
           </button>
         )}
