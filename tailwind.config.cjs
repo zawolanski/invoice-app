@@ -19,6 +19,13 @@ module.exports = {
           purple: '#858BB2',
           gray: '#DFE3FA',
         },
+        menu: {
+          DEFAULT: '#373B53',
+          dark: '#1E2139',
+        },
+        border: {
+          DEFAULT: '#494E6E',
+        },
       },
     },
   },
