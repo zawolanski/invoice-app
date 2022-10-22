@@ -9,16 +9,15 @@ import type { AppRouter } from '../server/router';
 import type { Session } from 'next-auth';
 import '../styles/globals.css';
 import { ThemeProvider } from 'next-themes';
-import HeadLayout from '../components/HeadLayout';
-import Header from '../components/Header';
+import Layout from '../components/Layout';
 
 const MyApp: AppType<{ session: Session | null }> = ({ Component, pageProps: { session, ...pageProps } }) => {
   return (
     <SessionProvider session={session}>
       <ThemeProvider attribute="class">
-        <HeadLayout />
-        <Header />
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </SessionProvider>
   );

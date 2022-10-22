@@ -10,7 +10,7 @@ const Header = () => {
   const { data: session, status } = useSession();
 
   return (
-    <header className="sticky flex h-16 justify-between	bg-menu dark:bg-menu-dark md:h-screen md:w-24 md:flex-col md:items-center md:justify-between md:rounded-tr-[26px] md:rounded-br-[26px]">
+    <header className="sticky top-0 left-0 flex h-16 justify-between	bg-menu dark:bg-menu-dark md:h-screen md:w-24 md:flex-col md:items-center md:justify-between md:rounded-tr-[26px] md:rounded-br-[26px]">
       <div className="relative h-full w-16 md:h-24 md:w-full">
         <Image src={logo} alt="" fill />
       </div>
