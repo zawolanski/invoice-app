@@ -11,7 +11,7 @@ const Header = () => {
   const { data: session, status } = useSession();
 
   return (
-    <header className="sticky top-0 left-0 flex h-16 justify-between	bg-menu dark:bg-menu-dark md:h-screen md:w-24 md:flex-col md:items-center md:justify-between md:rounded-tr-[26px] md:rounded-br-[26px]">
+    <header className="sticky top-0 left-0 flex h-16 justify-between bg-bg-black dark:bg-bg-dark-black-active md:h-screen md:w-24 md:flex-col md:items-center md:justify-between md:rounded-tr-[26px] md:rounded-br-[26px]">
       <div className="relative h-full w-16 md:h-24 md:w-full">
         <Image src={logo} alt="" fill />
       </div>
@@ -22,9 +22,9 @@ const Header = () => {
           onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
         >
           {resolvedTheme === 'light' ? (
-            <MoonIcon className="hover:text-typography-gray h-7 w-7 text-typography-purple transition-colors" />
+            <MoonIcon className="h-7 w-7 text-bg-icon transition-colors hover:text-bg-icon-active" />
           ) : (
-            <SunIcon className="hover:text-typography-gray h-7 w-7 text-typography-purple transition-colors" />
+            <SunIcon className="h-7 w-7 text-bg-icon transition-colors hover:text-bg-icon-active" />
           )}
         </button>
         <div className="h-full w-px bg-border md:h-px md:w-full"></div>
@@ -36,7 +36,7 @@ const Header = () => {
             {session?.user?.image ? (
               <Image src={session?.user?.image} alt="" fill />
             ) : (
-              <UserIcon className="h-6 w-6 text-typography-purple" />
+              <UserIcon className="text-typography-purple h-6 w-6" />
             )}
           </button>
         ) : (
