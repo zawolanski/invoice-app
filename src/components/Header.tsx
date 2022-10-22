@@ -22,9 +22,9 @@ const Header = () => {
           onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
         >
           {resolvedTheme === 'light' ? (
-            <MoonIcon className="h-7 w-7 text-typography-purple transition-colors hover:text-typography-gray" />
+            <MoonIcon className="hover:text-typography-gray h-7 w-7 text-typography-purple transition-colors" />
           ) : (
-            <SunIcon className="h-7 w-7 text-typography-purple transition-colors hover:text-typography-gray" />
+            <SunIcon className="hover:text-typography-gray h-7 w-7 text-typography-purple transition-colors" />
           )}
         </button>
         <div className="h-full w-px bg-border md:h-px md:w-full"></div>
@@ -43,6 +43,7 @@ const Header = () => {
           <div className="m-6">
             <Button
               type="button"
+              use="light"
               onClick={() => {
                 signIn();
               }}

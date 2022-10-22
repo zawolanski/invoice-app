@@ -15,6 +15,11 @@ module.exports = {
           DEFAULT: '#7C5DFA',
           light: '#9277FF',
         },
+        secondary: {
+          DEFAULT: '#F9FAFE',
+          dark: '#252945',
+          light: '#DFE3FA',
+        },
         bg: {
           DEFAULT: '#F8F8FB',
           dark: '#141625',
@@ -23,7 +28,8 @@ module.exports = {
           DEFAULT: '#FFFFFF',
           dark: '#0C0E16',
           purple: '#858BB2',
-          gray: '#DFE3FA',
+          secondary: '#7E88C3',
+          secondaryDark: '#888EB0',
         },
         menu: {
           DEFAULT: '#373B53',
@@ -31,6 +37,10 @@ module.exports = {
         },
         border: {
           DEFAULT: '#494E6E',
+        },
+        danger: {
+          DEFAULT: '#EC5757',
+          light: '#FF9797',
         },
       },
     },
