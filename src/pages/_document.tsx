@@ -3,7 +3,12 @@ import { Html, Head, Main, NextScript } from 'next/document';
 const Document = () => {
   return (
     <Html>
-      <Head />
+      <Head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
       <body className="bg-bg text-typography-dark dark:bg-bg-dark dark:text-typography">
         <Main />
         <NextScript />

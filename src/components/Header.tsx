@@ -4,6 +4,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import { SunIcon, MoonIcon, UserIcon } from '@heroicons/react/24/solid';
 
 import logo from '../../public/logo.svg';
+import Button from './Button';
 
 const Header = () => {
   const { resolvedTheme, setTheme } = useTheme();
@@ -39,9 +40,16 @@ const Header = () => {
             )}
           </button>
         ) : (
-          <button type="button" className="mx-6 md:my-6" onClick={() => signIn()}>
-            Sign in
-          </button>
+          <div className="m-6">
+            <Button
+              type="button"
+              onClick={() => {
+                signIn();
+              }}
+            >
+              Sign in
+            </Button>
+          </div>
         )}
       </div>
     </header>

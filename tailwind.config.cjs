@@ -1,9 +1,15 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['League Spartan', ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         primary: {
           DEFAULT: '#7C5DFA',
