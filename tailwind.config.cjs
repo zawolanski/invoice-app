@@ -11,30 +11,28 @@ module.exports = {
         sans: ['League Spartan', ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        // -------------- COMMON --------------
+        primary: {
+          DEFAULT: '#7C5DFA',
+          active: '#9277FF',
+        },
+        danger: {
+          DEFAULT: '#EC5757',
+          active: '#FF9797',
+        },
+        success: '#33D69F',
+        warning: '#FF8F00',
+
         // -------------- TYPOGRAPHY --------------
         typography: {
           DEFAULT: '#0C0E16',
-          primary: '#7C5DFA',
           secondary: '#7E88C3',
-          success: '#33D69F',
-          warning: '#FF8F00',
-          danger: {
-            DEFAULT: '#EC5757',
-            active: '#FF9797',
-          },
           gray: '#888EB0',
 
           // ------ DARK TYPOGRAPHY ------
           dark: {
             DEFAULT: '#FFFFFF',
-            primary: '#7C5DFA',
             secondary: '#DFE3FA',
-            success: '#33D69F',
-            warning: '#FF8F00',
-            danger: {
-              DEFAULT: '#EC5757',
-              active: '#FF9797',
-            },
             gray: '#888EB0',
           },
         },
@@ -42,19 +40,9 @@ module.exports = {
         // -------------- BACKGROUNDS --------------
         bg: {
           DEFAULT: '#F8F8FB',
-          primary: {
-            DEFAULT: '#7C5DFA',
-            active: '#9277FF',
-          },
           secondary: {
             DEFAULT: '#F9FAFE',
             active: '#DFE3FA',
-          },
-          success: '#33D69F',
-          warning: '#FF8F00',
-          danger: {
-            DEFAULT: '#EC5757',
-            active: '#FF9797',
           },
           black: {
             DEFAULT: '#373B53',
@@ -69,19 +57,9 @@ module.exports = {
           // ------ DARK BACKGROUNDS ------
           dark: {
             DEFAULT: '#141625',
-            primary: {
-              DEFAULT: '#7C5DFA',
-              active: '#9277FF',
-            },
             secondary: {
               DEFAULT: '#252945',
               active: '#FFFFFF',
-            },
-            success: '#33D69F',
-            warning: '#FF8F00',
-            danger: {
-              DEFAULT: '#EC5757',
-              active: '#FF9797',
             },
             black: {
               DEFAULT: '#373B53',
