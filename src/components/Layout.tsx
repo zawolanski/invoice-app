@@ -8,7 +8,7 @@ const Layout = ({ children }: Props) => {
   return (
     <>
       <HeadLayout />
-      <div className="flex">
+      <div className="flex flex-col md:flex-row">
         <Header />
         <main className="flex-grow">{children}</main>
       </div>

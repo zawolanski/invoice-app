@@ -18,7 +18,7 @@ const Header = () => {
       <div className="flex items-center md:w-full md:flex-col md:items-center">
         <button
           type="button"
-          className="mx-6 flex h-8 w-8 items-center justify-center md:my-6 "
+          className="mx-6 flex h-8 w-8 items-center justify-center md:my-6"
           onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
         >
           {resolvedTheme === 'light' ? (
