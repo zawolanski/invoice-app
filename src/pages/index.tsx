@@ -1,7 +1,9 @@
 import type { NextPage } from 'next';
-
+import Image from 'next/future/image';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
+
 import Button from '../components/Button';
+import nothingThereImg from '../../public/nothing_there.svg';
 
 const Home: NextPage = () => {
   return (
@@ -17,6 +19,14 @@ const Home: NextPage = () => {
             New Invoice
           </Button>
         </div>
+      </div>
+      <div className="m-auto mt-24 w-60 md:mt-40 md:w-64">
+        <Image className="mx-auto mb-9" src={nothingThereImg} alt="" />
+        <p className="mb-6 text-center text-2xl font-bold tracking-tight">There is nothing here</p>
+        <p className="text-center leading-none tracking-tight text-typography-gray dark:text-typography-dark-secondary">
+          Create an invoice by clicking the <br />
+          <span className="font-bold">New Invoice</span> button and get started
+        </p>
       </div>
     </div>
   );
