@@ -43,7 +43,7 @@ const Header = () => {
           <div className="m-6">
             <Button
               type="button"
-              use="danger"
+              use="light"
               onClick={() => {
                 signIn();
               }}
