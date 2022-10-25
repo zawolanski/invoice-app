@@ -10,6 +10,14 @@ module.exports = {
       fontFamily: {
         sans: ['League Spartan', ...defaultTheme.fontFamily.sans],
       },
+      // -------------- SHADOWS --------------
+      boxShadow: {
+        select: '0 8px 20px 0 rgba(72, 84, 159, 0.25)',
+
+        // ------ DARK ------
+        'dark-select': '0 8px 20px 0 rgba(0, 0, 0, 0.25)',
+      },
+
       colors: {
         // -------------- COMMON --------------
         primary: {
@@ -85,5 +93,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@headlessui/tailwindcss')],
 };
