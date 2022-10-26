@@ -25,8 +25,8 @@ const Select = ({ label, name, options }: Props) => {
             key={option.id}
             value={option}
           >
-            <div className="h-4 w-4 rounded-sm border-[1px] border-transparent bg-bg-dark transition-colors group-hover:border-primary ui-selected:bg-primary">
-              <CheckIcon className=" hidden stroke-[4] ui-selected:block" />
+            <div className="h-4 w-4 rounded-sm border-[1px] border-transparent transition-colors group-hover:border-primary ui-selected:!bg-primary ui-not-selected:bg-bg-secondary-active dark:bg-bg-dark">
+              <CheckIcon className="hidden stroke-[4] text-white ui-selected:block" />
             </div>
             <span className="pt-1 font-bold leading-none tracking-tight">{option.name}</span>
           </Listbox.Option>
