@@ -25,11 +25,20 @@ const Home: NextPage = () => {
             <h1 className="text-2xl font-bold tracking-tighter sm:pb-1 sm:text-3xl">Invoices</h1>
             <p className="font-medium text-typography-gray dark:text-typography-dark-secondary">No invoices</p>
           </div>
-          <div className="flex items-center gap-4 sm:gap-10">
-            <Select options={options} name="status" label="Filter by status" />
+          <div className="flex items-center gap-3 sm:gap-10">
+            <Select
+              options={options}
+              name="status"
+              label={
+                <>
+                  Filter
+                  <span className="hidden sm:inline">&nbsp;by status</span>
+                </>
+              }
+            />
             <Button onClick={() => console.log('add invoice')} className="pl-2">
-              <PlusCircleIcon className="mr-3 h-10 w-10" />
-              New Invoice
+              <PlusCircleIcon className="mr-2 h-10 w-10 sm:mr-3" />
+              New<span className="hidden sm:inline">&nbsp;Invoice</span>
             </Button>
           </div>
         </div>

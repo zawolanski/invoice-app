@@ -6,7 +6,7 @@ type SelectOption = { id: string; name: string };
 
 interface Props {
   options: SelectOption[];
-  label: string;
+  label: React.ReactNode;
   name: string;
 }
 const Select = ({ label, name, options }: Props) => {
