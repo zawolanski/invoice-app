@@ -13,6 +13,7 @@ module.exports = {
       // -------------- SHADOWS --------------
       boxShadow: {
         select: '0 8px 20px 0 rgba(72, 84, 159, 0.25)',
+        formBar: '0 20px 100px 0 rgba(0, 0, 0, 0.25)',
 
         // ------ DARK ------
         'dark-select': '0 8px 20px 0 rgba(0, 0, 0, 0.25)',
