@@ -13,8 +13,8 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
   return (
     <Dialog open={isOpen} onClose={() => {}} className="relative z-20">
       <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-      <div className="fixed inset-0 bottom-20 mt-16 overflow-y-auto bg-bg dark:bg-bg-dark">
-        <div className="min-h-full p-6">
+      <div className="fixed inset-0 top-16 box-border flex flex-col bg-bg p-6 pb-20 dark:bg-bg-dark sm:max-w-[38rem] sm:rounded-tr-[26px] sm:rounded-br-[26px]">
+        <div className="flex-grow overflow-y-auto ">
           <Dialog.Panel>
             <button onClick={() => setIsOpen(false)} className="mb-6 flex items-center gap-4">
               <ChevronLeftIcon className="h-5 stroke-[3] text-primary" />
@@ -24,7 +24,7 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
           </Dialog.Panel>
         </div>
       </div>
-      <div className="fixed bottom-0 left-0 h-20 w-full bg-white shadow-formBar dark:bg-bg-black-active">
+      <div className="fixed bottom-0 left-0 h-20 w-full bg-white shadow-formBar dark:bg-bg-black-active sm:w-full sm:max-w-[38rem] sm:rounded-br-[26px]">
         <div className="flex h-full items-center justify-end gap-2 p-5">
           {mode === 'add' ? (
             <>
