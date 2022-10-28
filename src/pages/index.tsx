@@ -15,7 +15,7 @@ const options = [
 ];
 
 const Home: NextPage = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
                 </>
               }
             />
-            <Button onClick={() => console.log('add invoice')} className="pl-2">
+            <Button onClick={() => setIsOpen(true)} className="pl-2">
               <PlusCircleIcon className="mr-2 h-10 w-10 sm:mr-3" />
               New<span className="hidden sm:inline">&nbsp;Invoice</span>
             </Button>
