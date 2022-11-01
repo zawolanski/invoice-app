@@ -82,7 +82,7 @@ const Invoice = () => {
             <p className="text-lg font-bold text-typography dark:text-white">{invoice.clientEmail}</p>
           </div>
         </div>
-        <div className="rounded-lg bg-bg-secondary  dark:bg-bg-dark-secondary">
+        <div className="overflow-hidden rounded-lg bg-bg-secondary dark:bg-bg-dark-secondary">
           <ul className="p-6">
             {invoice.items?.map((item) => (
               <li key={item.id} className="mb-6 last:mb-0">
