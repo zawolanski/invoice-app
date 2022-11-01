@@ -5,7 +5,7 @@ export const invoices = [
     status: 'pending',
     amountDue: 556,
     paymentDue: new Date('2021-09-20T00:00:00'),
-    invoiceData: new Date('2021-08-21T00:00:00'),
+    invoiceDate: new Date('2021-08-21T00:00:00'),
     description: 'Graphic Design',
     streetName: '19 Union Terrace',
     city: 'London',

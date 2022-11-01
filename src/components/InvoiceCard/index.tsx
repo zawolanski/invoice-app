@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { transformDate } from '../../helpers/transformDate';
 
 interface Props {
   id: string;
@@ -26,11 +27,6 @@ const InvoiceCard = ({ id, amountDue, clientName: clientsName, paymentDue, statu
       });
   }, [status]);
 
-  const day = paymentDue.getDate() < 10 ? `0${paymentDue.getDate()}` : paymentDue.getDate();
-  const month = paymentDue.toLocaleString('default', { month: 'short' });
-  const year = paymentDue.getFullYear();
-  const paymentDueData = `Due ${day} ${month} ${year}`;
-
   return (
     <div className="flex justify-between rounded-lg bg-white p-6 dark:bg-bg-black-active">
       <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6">
@@ -38,7 +34,7 @@ const InvoiceCard = ({ id, amountDue, clientName: clientsName, paymentDue, statu
           <span className="text-typography-secondary">#</span>
           {id}
         </p>
-        <p className="text-typography-gray dark:text-typography-dark-secondary">{paymentDueData}</p>
+        <p className="text-typography-gray dark:text-typography-dark-secondary">Due {transformDate(paymentDue)}</p>
         <p className="text-xl font-bold sm:hidden">£ {amountDue}</p>
         <p className="mb-5 hidden max-w-[140px] truncate text-typography-gray dark:text-typography-dark-secondary sm:m-0 sm:block">
           {clientsName}

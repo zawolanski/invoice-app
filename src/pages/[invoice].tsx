@@ -2,6 +2,7 @@ import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Button from '../components/Button';
 import { invoices } from '../data/invoices';
+import { transformDate } from '../helpers/transformDate';
 
 const Invoice = () => {
   const invoice = invoices[0];
@@ -52,13 +53,13 @@ const Invoice = () => {
               <div>
                 <p>Invoice Date</p>
                 <p className="mb-6 text-lg font-bold text-typography dark:text-white">
-                  {invoice.invoiceData?.getFullYear()}
+                  {transformDate(invoice.invoiceDate!)}
                 </p>
               </div>
               <div>
                 <p>Payment Due</p>
                 <p className="text-lg font-bold text-typography dark:text-white">
-                  {invoice.invoiceData?.getFullYear()}
+                  {transformDate(invoice.paymentDue!)}
                 </p>
               </div>
             </div>
