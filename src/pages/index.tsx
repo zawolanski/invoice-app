@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import Image from 'next/future/image';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
 
@@ -17,7 +17,16 @@ const options = [
 ];
 
 const Home: NextPage = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const query = router.query;
+
+  const handleOpen = () => {
+    router.replace('/?form=add', undefined, { shallow: true });
+  };
+
+  const handleClose = () => {
+    router.replace('/', undefined, { shallow: true });
+  };
 
   return (
     <>
@@ -38,7 +47,7 @@ const Home: NextPage = () => {
                 </>
               }
             />
-            <Button onClick={() => setIsOpen(true)} className="pl-2">
+            <Button onClick={handleOpen} className="pl-2">
               <PlusCircleIcon className="mr-2 h-10 w-10 sm:mr-3" />
               New<span className="hidden sm:inline">&nbsp;Invoice</span>
             </Button>
@@ -61,7 +70,7 @@ const Home: NextPage = () => {
           </div>
         )}
       </div>
-      <InvoiceForm title="New Invoice" mode="add" isOpen={isOpen} setIsOpen={(val) => setIsOpen(val)} />
+      <InvoiceForm title="New Invoice" mode="add" isOpen={query?.form === 'add'} setIsOpen={handleClose} />
     </>
   );
 };
