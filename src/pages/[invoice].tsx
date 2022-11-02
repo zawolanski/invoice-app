@@ -1,9 +1,8 @@
-import { ChevronLeftIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
 import Button from '../components/Button';
 import StatusBox from '../components/StatusBox';
 import { invoices } from '../data/invoices';
 import { transformDate } from '../helpers/transformDate';
+import GoBack from '../components/GoBack';
 
 const Invoice = () => {
   const invoice = invoices[0];
@@ -12,12 +11,7 @@ const Invoice = () => {
 
   return (
     <div className="mx-auto max-w-3xl py-8 px-6 pb-24 text-typography-gray dark:text-typography-dark-secondary sm:py-12 sm:px-10">
-      <Link href="/" legacyBehavior>
-        <a className="mb-6 flex items-center gap-4">
-          <ChevronLeftIcon className="h-5 stroke-[3] text-primary" />
-          <span className="font-bold leading-none">Go back</span>
-        </a>
-      </Link>
+      <GoBack />
       <div className="mb-4 flex items-center justify-between rounded-lg bg-white p-6 dark:bg-bg-dark-black-active">
         <span className="sm:mr-4">Status</span>
         <StatusBox status={invoice.status} />

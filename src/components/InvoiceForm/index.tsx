@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Dialog } from '@headlessui/react';
-import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { useCallback, useEffect } from 'react';
 
 import Button from '../Button';
+import GoBack from '../GoBack';
 
 interface Props {
   isOpen: boolean;
@@ -26,10 +26,7 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
       <div className="fixed inset-0 bg-black/50" aria-hidden="true" onClick={() => setIsOpen(false)} />
       <div className="fixed inset-0 top-16 box-border flex flex-col bg-bg p-6 pb-20 dark:bg-bg-dark sm:max-w-[38rem] sm:rounded-tr-[26px] sm:rounded-br-[26px] md:top-0 md:max-w-[42rem] md:pl-28">
         <Dialog.Panel className="flex-grow overflow-y-auto">
-          <button onClick={() => setIsOpen(false)} className="mb-6 flex items-center gap-4 sm:hidden">
-            <ChevronLeftIcon className="h-5 stroke-[3] text-primary" />
-            <span className="font-bold leading-none">Go back</span>
-          </button>
+          <GoBack as="button" onClick={() => setIsOpen(false)} />
           <Dialog.Title className="text-3xl font-bold">{title}</Dialog.Title>
         </Dialog.Panel>
       </div>
