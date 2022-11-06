@@ -1,34 +1,39 @@
+import { useController, UseControllerProps } from 'react-hook-form';
 import { Listbox } from '@headlessui/react';
-import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
-type StatusFilterOption = { id: string; name: string };
+import { textfieldInputClass, textfieldLabelClass } from '../Textfield';
 
-interface Props {
-  options: StatusFilterOption[];
-  label: React.ReactNode;
-  name: string;
+type SelectOption = { id: string; name: string };
+
+interface Props extends UseControllerProps {
+  options: SelectOption[];
+  label: string;
 }
-const StatusFilter = ({ label, name, options }: Props) => {
-  const [selectedItem, setSelectedItem] = useState([] as StatusFilterOption[]);
+const Select = ({ name, options, control, defaultValue, rules, shouldUnregister, label }: Props) => {
+  const {
+    field: { value, onChange },
+  } = useController({ name, control, defaultValue, rules, shouldUnregister });
 
   return (
-    <Listbox as="div" value={selectedItem} onChange={setSelectedItem} name={name} multiple className="relative">
-      <Listbox.Button className="flex items-center gap-3 whitespace-nowrap">
-        <span className="font-bold ">{label}</span>
-        <ChevronDownIcon className="w-5 stroke-[3] text-primary" />
+    <Listbox as="div" value={value} onChange={onChange} className="relative">
+      <Listbox.Label className={`clock mb-1 ${textfieldLabelClass}`}>{label}</Listbox.Label>
+      <Listbox.Button className={`relative w-full ${textfieldInputClass}`}>
+        <div className="text-left leading-none">{value ? (value as SelectOption).name : ''}</div>
+        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+          <ChevronDownIcon className="w-4 stroke-[3] text-primary" />
+        </div>
       </Listbox.Button>
-      <Listbox.Options className="absolute top-8 left-1/2 z-50 w-44 -translate-x-2/4 rounded-lg bg-white p-6 shadow-select  dark:bg-bg-dark-secondary dark:shadow-dark-select">
+      <Listbox.Options className="absolute left-0 z-50 my-3 w-full rounded-lg bg-white shadow-select  dark:bg-bg-dark-secondary dark:shadow-dark-select">
         {options.map((option) => (
           <Listbox.Option
-            className="group mb-2.5 flex cursor-pointer items-center gap-3 last:mb-0"
+            className="group flex cursor-pointer items-center gap-3 border-b-2 py-5 px-7 last:border-b-0 dark:border-bg-dark-black-active "
             key={option.id}
             value={option}
           >
-            <div className="h-4 w-4 rounded-sm border-[1px] border-transparent transition-colors group-hover:border-primary ui-selected:!bg-primary ui-not-selected:bg-bg-secondary-active dark:bg-bg-dark">
-              <CheckIcon className="hidden stroke-[4] text-white ui-selected:block" />
-            </div>
-            <span className="pt-1 font-bold leading-none tracking-tight">{option.name}</span>
+            <span className="font-bold leading-none tracking-tight transition-colors group-hover:text-primary dark:text-typography-dark-secondary dark:group-hover:text-primary-active">
+              {option.name}
+            </span>
           </Listbox.Option>
         ))}
       </Listbox.Options>
@@ -36,4 +41,4 @@ const StatusFilter = ({ label, name, options }: Props) => {
   );
 };
 
-export default StatusFilter;
+export default Select;

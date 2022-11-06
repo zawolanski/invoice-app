@@ -5,13 +5,18 @@ import { useForm } from 'react-hook-form';
 
 import Button from '../Button';
 import GoBack from '../GoBack';
+import Select from '../Select';
 import Textfield from '../Textfield';
 
 type FormValues = {
   clientName: string;
   status: string;
   paymentDue: Date;
-  invoiceDue: Date;
+  paymentTerms: {
+    id: string;
+    name: string;
+    value: number;
+  };
   description: string;
   streetName: string;
   city: string;
@@ -24,6 +29,13 @@ type FormValues = {
   clientEmail: string;
 };
 
+const options = [
+  { id: '1', name: 'Net 1 Day', value: 1 },
+  { id: '2', name: 'Net 7 Days', value: 7 },
+  { id: '3', name: 'Net 14 Days', value: 14 },
+  { id: '4', name: 'Net 30 Days', value: 30 },
+];
+
 interface Props {
   isOpen: boolean;
   setIsOpen: (val: boolean) => void;
@@ -31,15 +43,12 @@ interface Props {
   mode: 'add' | 'edit';
 }
 const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>();
+  const { register, handleSubmit, control } = useForm<FormValues>();
   const onSubmit = handleSubmit((data) => console.log(data));
 
   const closeModalOnEsc = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') setIsOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -59,7 +68,7 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
 
             <div className="flex flex-col gap-4 pb-10 sm:gap-6">
               <Textfield register={register} name="streetName" label="Street address" />
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:flex-row sm:gap-6">
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
                 <Textfield register={register} name="city" label="City" />
                 <Textfield register={register} name="streetName" label="Post code" />
                 <Textfield
@@ -82,7 +91,7 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
                 type="email"
               />
               <Textfield register={register} name="clientStreetName" label="Street address" />
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:flex-row sm:gap-6">
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
                 <Textfield register={register} name="clientCity" label="City" />
                 <Textfield register={register} name="clientPostCode" label="Post code" />
                 <Textfield
@@ -92,7 +101,16 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
                   label="Country"
                 />
               </div>
-              <div></div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
+                Invoice Date
+                <Select
+                  control={control as any}
+                  options={options}
+                  name="paymentTerms"
+                  defaultValue={options[3]}
+                  label="Payment Terms"
+                />
+              </div>
               <Textfield
                 register={register}
                 name="description"

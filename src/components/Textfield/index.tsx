@@ -11,7 +11,7 @@ interface Props {
 const Textfield = ({ label, name, register, placeholder = '', type = 'text', containerClass = '' }: Props) => {
   return (
     <div className={`w-full ${containerClass}`}>
-      <div className="mb-2 flex items-center justify-between gap-2 whitespace-nowrap">
+      <div className={textfieldLabelClass}>
         <label className="capitalize text-typography-secondary dark:text-typography-dark-gray" htmlFor={name}>
           {label}
         </label>
@@ -23,7 +23,7 @@ const Textfield = ({ label, name, register, placeholder = '', type = 'text', con
         id={name}
         type={type}
         placeholder={placeholder}
-        className="placeholder-typography/35 h-12 w-full rounded-[4px] border-[1px] border-border-input bg-transparent px-4 font-bold text-typography outline-none transition-colors hover:border-border-input-active focus:border-border-input-active dark:border-border-dark-input dark:bg-bg-dark-black-active dark:text-white dark:placeholder-white/60 dark:hover:border-border-dark-input-active dark:focus:border-border-dark-input-active"
+        className={textfieldInputClass}
         {...register(name, { valueAsNumber: type === 'number' })}
       />
     </div>
@@ -31,3 +31,8 @@ const Textfield = ({ label, name, register, placeholder = '', type = 'text', con
 };
 
 export default Textfield;
+
+export const textfieldInputClass =
+  'placeholder-typography/35 h-12 w-full rounded-[4px] border-[1px] border-border-input bg-transparent px-4 font-bold text-typography outline-none transition-colors hover:border-border-input-active focus:border-border-input-active dark:border-border-dark-input dark:bg-bg-dark-black-active dark:text-white dark:placeholder-white/60 dark:hover:border-border-dark-input-active dark:focus:border-border-dark-input-active';
+
+export const textfieldLabelClass = 'capitalize text-typography-secondary dark:text-typography-dark-gray';
