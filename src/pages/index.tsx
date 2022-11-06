@@ -4,7 +4,7 @@ import Image from 'next/future/image';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
 
 import Button from '../components/Button';
-import Select from '../components/Select';
+import StatusFilter from '../components/StatusFilter';
 import nothingThereImg from '../../public/nothing_there.svg';
 import InvoiceForm from '../components/InvoiceForm';
 import { invoices } from '../data/invoices';
@@ -37,7 +37,7 @@ const Home: NextPage = () => {
             <p className="font-medium text-typography-gray dark:text-typography-dark-secondary">No invoices</p>
           </div>
           <div className="flex items-center gap-3 sm:gap-10">
-            <Select
+            <StatusFilter
               options={options}
               name="status"
               label={
