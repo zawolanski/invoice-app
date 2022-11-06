@@ -85,10 +85,18 @@ module.exports = {
         // -------------- BORDERS --------------
         border: {
           DEFAULT: '#494E6E',
+          input: {
+            DEFAULT: '#DFE3FA',
+            active: '#9277FF',
+          },
 
           // ------ DARK BORDERS ------
           dark: {
             DEFAULT: '#494E6E',
+            input: {
+              DEFAULT: '#252945',
+              active: '#7C5DFA',
+            },
           },
         },
       },
