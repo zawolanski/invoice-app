@@ -6,13 +6,25 @@ interface Props {
   register: UseFormRegister<any>;
   placeholder?: string;
   type?: 'text' | 'number' | 'email';
+  labelClass?: string;
   containerClass?: string;
 }
-const Textfield = ({ label, name, register, placeholder = '', type = 'text', containerClass = '' }: Props) => {
+const Textfield = ({
+  label,
+  name,
+  register,
+  placeholder = '',
+  type = 'text',
+  containerClass = '',
+  labelClass = '',
+}: Props) => {
   return (
     <div className={`w-full ${containerClass}`}>
       <div className={textfieldLabelClass}>
-        <label className="capitalize text-typography-secondary dark:text-typography-dark-gray" htmlFor={name}>
+        <label
+          className={`capitalize text-typography-secondary dark:text-typography-dark-gray ${labelClass}`}
+          htmlFor={name}
+        >
           {label}
         </label>
         {/* <span className="text-sm text-danger" role="alert">
