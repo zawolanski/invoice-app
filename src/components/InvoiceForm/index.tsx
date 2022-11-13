@@ -132,16 +132,18 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
             </div>
 
             {fields.length > 0 ? (
-              <p className="mb-6 text-xl font-bold text-typography-gray sm:mb-4">Item List</p>
+              <>
+                <p className="mb-6 text-xl font-bold text-typography-gray sm:mb-4">Item List</p>
+                <div className="hidden items-center gap-x-4 gap-y-6 sm:mb-3 sm:grid sm:grid-cols-[auto_10%_20%_20%_1.5rem]">
+                  <p>Item Name</p>
+                  <p>Qty.</p>
+                  <p>Price</p>
+                  <p>Total</p>
+                  <span></span>
+                </div>
+              </>
             ) : null}
             <div className="mb-10">
-              <div className="hidden items-center gap-x-4 gap-y-6 sm:mb-3 sm:grid sm:grid-cols-[auto_10%_20%_20%_1.5rem]">
-                <p>Item Name</p>
-                <p>Qty.</p>
-                <p>Price</p>
-                <p>Total</p>
-                <span></span>
-              </div>
               {fields.map((field, i) => (
                 <div
                   className="mb-10 grid grid-cols-[repeat(3,_minmax(0,_1fr))_1.5rem] items-center gap-x-4 gap-y-6 sm:mb-3 sm:grid-cols-[auto_10%_20%_20%_1.5rem]"
