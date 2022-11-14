@@ -20,7 +20,7 @@ export const invoices = [
       {
         id: '1',
         itemName: 'Banner Design',
-        quantity: '1',
+        quantity: 1,
         price: 156,
       },
       {

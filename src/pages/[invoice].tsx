@@ -91,10 +91,12 @@ const Invoice = () => {
                   <div className="flex flex-col">
                     <span className="font-bold text-typography dark:text-white">{item.itemName}</span>
                     <span className="font-bold text-typography-secondary dark:text-typography-gray">
-                      {item.quantity} x £ {item.total.toFixed(2)}
+                      {item.quantity} x £ {item.price.toFixed(2)}
                     </span>
                   </div>
-                  <div className="font-bold text-typography dark:text-white">£ {item.total.toFixed(2)}</div>
+                  <div className="font-bold text-typography dark:text-white">
+                    £ {(item.quantity * item.price).toFixed(2)}
+                  </div>
                 </div>
               </li>
             ))}
