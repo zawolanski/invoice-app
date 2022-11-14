@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { clsx } from 'clsx';
 
 import { ButtonType, ButtonUse } from './types';
@@ -12,13 +13,13 @@ const BUTTON_COLOR: { [key in ButtonUse]: string } = {
 };
 interface Props {
   type?: ButtonType;
-  onClick: () => void;
+  onClick?: () => void;
   children: React.ReactNode;
   className?: string;
   use?: ButtonUse;
 }
 
-const Button = ({ type = 'button', children, onClick, className, use = 'primary' }: Props) => {
+const Button = ({ type = 'button', children, onClick = () => {}, className, use = 'primary' }: Props) => {
   return (
     <button
       type={type}

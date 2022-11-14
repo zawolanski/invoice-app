@@ -9,11 +9,11 @@ import Button from '../Button';
 import GoBack from '../GoBack';
 import Select from '../Select';
 import Textfield, { textfieldLabelClass } from '../Textfield';
+import { trpc } from '../../utils/trpc';
+import { addDays } from '../../helpers/addDays';
 
 type FormValues = {
   clientName: string;
-  status: string;
-  paymentDue: Date;
   paymentTerms: {
     id: string;
     name: string;
@@ -51,12 +51,44 @@ interface Props {
   mode: 'add' | 'edit';
 }
 const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
+  const { mutate } = trpc.useMutation(['invoice.addInvoice']);
   const { register, handleSubmit, control } = useForm<FormValues>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'items',
   });
-  const onSubmit = handleSubmit((data) => console.log(data));
+
+  const onSubmit = handleSubmit(async (data) => {
+    mutate({
+      ...data,
+      invoiceDate: new Date(),
+      paymentDue: addDays(new Date(), data.paymentTerms.value),
+      amountDue:
+        data.items.length > 0
+          ? data.items.reduce(
+              (prev, curr) => (curr.price && curr.quantity ? prev + curr.price * curr.quantity : prev),
+              0
+            )
+          : 0,
+      status: 'pending',
+    });
+  });
+
+  const saveAsDraft = handleSubmit(async (data) => {
+    mutate({
+      ...data,
+      invoiceDate: new Date(),
+      paymentDue: addDays(new Date(), data.paymentTerms.value),
+      amountDue:
+        data.items.length > 0
+          ? data.items.reduce(
+              (prev, curr) => (curr.price && curr.quantity ? prev + curr.price * curr.quantity : prev),
+              0
+            )
+          : 0,
+      status: 'draft',
+    });
+  });
 
   const closeModalOnEsc = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') setIsOpen(false);
@@ -82,7 +114,7 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
               <Textfield register={register} name="streetName" label="Street address" />
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
                 <Textfield register={register} name="city" label="City" />
-                <Textfield register={register} name="streetName" label="Post code" />
+                <Textfield register={register} name="postCode" label="Post code" />
                 <Textfield
                   containerClass="col-span-full sm:col-auto"
                   register={register}
@@ -146,7 +178,7 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
             <div className="mb-10">
               {fields.map((field, i) => (
                 <div
-                  className="mb-10 grid grid-cols-[repeat(3,_minmax(0,_1fr))_1.5rem] items-center gap-x-4 gap-y-6 sm:mb-3 sm:grid-cols-[auto_10%_20%_20%_1.5rem]"
+                  className="mb-10 grid grid-cols-[repeat(3,_minmax(0,_1fr))_1.5rem] items-center gap-x-4 gap-y-6 sm:mb-3 sm:grid-cols-[auto_14%_18%_18%_1.5rem]"
                   key={field.id}
                 >
                   <Textfield
@@ -156,8 +188,20 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
                     label="Item Name"
                     labelClass="sm:sr-only"
                   />
-                  <Textfield register={register} name={`items.${i}.quantity`} label="Qty." labelClass="sm:sr-only" />
-                  <Textfield register={register} name={`items.${i}.price`} label="Price" labelClass="sm:sr-only" />
+                  <Textfield
+                    register={register}
+                    name={`items.${i}.quantity`}
+                    type="number"
+                    label="Qty."
+                    labelClass="sm:sr-only"
+                  />
+                  <Textfield
+                    register={register}
+                    name={`items.${i}.price`}
+                    type="number"
+                    label="Price"
+                    labelClass="sm:sr-only"
+                  />
                   <div>
                     <p className={`${textfieldLabelClass} sm:sr-only`}>Total</p>
                     <p className="flex h-12 items-center text-typography-secondary dark:text-typography-dark-gray">
@@ -190,21 +234,17 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
                     <Button use="secondary" onClick={() => setIsOpen(false)}>
                       Discard
                     </Button>
-                    <Button use="dark" onClick={() => console.log('save as draft')}>
+                    <Button use="dark" onClick={saveAsDraft}>
                       Save as Draft
                     </Button>
-                    <Button onClick={() => console.log('save & send')} type="submit">
-                      Save & Send
-                    </Button>
+                    <Button type="submit">Save & Send</Button>
                   </>
                 ) : (
                   <>
                     <Button use="secondary" onClick={() => setIsOpen(false)}>
                       Cancel
                     </Button>
-                    <Button onClick={() => console.log('save & send')} type="submit">
-                      Save Changes
-                    </Button>
+                    <Button type="submit">Save Changes</Button>
                   </>
                 )}
               </div>
