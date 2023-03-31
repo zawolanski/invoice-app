@@ -50,6 +50,8 @@ export const protectedInvoiceActions = createProtectedRouter()
       const invoiceId = input;
       const invoice = await ctx.prisma.invoice.findFirst({ where: { id: { equals: invoiceId } } });
       const items = await ctx.prisma.invoiceItem.findMany({ where: { invoiceId } });
+      if (!invoice) return undefined;
+
       return { ...invoice, items };
     },
   });

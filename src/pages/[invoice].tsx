@@ -1,11 +1,32 @@
+import { useEffect, useState } from 'react';
+import { Invoice, InvoiceItem } from '@prisma/client';
+import { useRouter } from 'next/router';
+
+import LoadingSpinner from '../components/LoadingSpinner';
 import Button from '../components/Button';
 import StatusBox from '../components/StatusBox';
-import { invoices } from '../data/invoices';
-import { transformDate } from '../helpers/transformDate';
 import GoBack from '../components/GoBack';
+import { transformDate } from '../helpers/transformDate';
+import { trpc } from '../utils/trpc';
 
 const Invoice = () => {
-  const invoice = invoices[0];
+  const router = useRouter();
+  const { query } = router;
+  const invoiceId = (typeof query?.invoice === 'object' ? query?.invoice[0] : query?.invoice) ?? '';
+  const { data, isLoading } = trpc.useQuery(['invoice.fetchInvoice', invoiceId]);
+  const [invoice, setInvoice] = useState<(Invoice & { items: InvoiceItem[] }) | undefined>(undefined);
+
+  useEffect(() => {
+    if (data) setInvoice(data);
+  }, [data]);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[calc(100vh-64px)] items-center justify-center md:h-screen">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   if (!invoice) return null;
 
@@ -30,7 +51,7 @@ const Invoice = () => {
           <div>
             <p className="font-bold sm:mb-1 sm:text-xl">
               <span className="text-typography-secondary">#</span>
-              <span className="text-typography dark:text-white">{invoice.id}</span>
+              <span className="uppercase text-typography dark:text-white">{invoice.id}</span>
             </p>
             <p className="mb-7 max-w-xs truncate">{invoice.description}</p>
           </div>
@@ -50,19 +71,19 @@ const Invoice = () => {
               <div>
                 <p>Invoice Date</p>
                 <p className="mb-6 whitespace-nowrap text-lg font-bold text-typography dark:text-white">
-                  {transformDate(invoice.invoiceDate!)}
+                  {transformDate(invoice.invoiceDate)}
                 </p>
               </div>
               <div>
                 <p>Payment Due</p>
                 <p className="whitespace-nowrap text-lg font-bold text-typography dark:text-white">
-                  {transformDate(invoice.paymentDue!)}
+                  {transformDate(invoice.paymentDue)}
                 </p>
               </div>
             </div>
             <div>
               <p>Bill To</p>
-              <p className="mb-2 max-w-[9rem] truncate text-lg font-bold text-typography dark:text-white">
+              <p className="mb-2 max-w-[9rem] truncate text-lg font-bold capitalize text-typography dark:text-white">
                 {invoice.clientName}
               </p>
               <div>
@@ -84,23 +105,29 @@ const Invoice = () => {
           </div>
         </div>
         <div className="overflow-hidden rounded-lg bg-bg-secondary dark:bg-bg-dark-secondary">
-          <ul className="p-6">
-            {invoice.items?.map((item) => (
-              <li key={item.id} className="mb-6 last:mb-0">
-                <div className="flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <span className="font-bold text-typography dark:text-white">{item.itemName}</span>
-                    <span className="font-bold text-typography-secondary dark:text-typography-gray">
-                      {item.quantity} x £ {item.price.toFixed(2)}
-                    </span>
-                  </div>
-                  <div className="font-bold text-typography dark:text-white">
-                    £ {(item.quantity * item.price).toFixed(2)}
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+          {invoice.items.length > 0 ? (
+            <ul className="p-6">
+              {invoice.items?.map(
+                ({ id, itemName, price, quantity }) =>
+                  price &&
+                  quantity && (
+                    <li key={id} className="mb-6 last:mb-0">
+                      <div className="flex items-center justify-between">
+                        <div className="flex flex-col">
+                          <span className="font-bold text-typography dark:text-white">{itemName}</span>
+                          <span className="font-bold text-typography-secondary dark:text-typography-gray">
+                            {quantity} x £ {price.toFixed(2)}
+                          </span>
+                        </div>
+                        <div className="font-bold text-typography dark:text-white">
+                          £ {(quantity * price).toFixed(2)}
+                        </div>
+                      </div>
+                    </li>
+                  )
+              )}
+            </ul>
+          ) : null}
           <div className="flex items-center justify-between bg-bg-black p-6 dark:bg-bg-black-active">
             <p className="text-white">Amount Due</p>
             <p className="text-2xl font-bold text-white">£ {invoice.amountDue.toFixed(2)}</p>
