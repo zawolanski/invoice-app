@@ -5,11 +5,7 @@ import Image from 'next/future/image';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
 import { Invoice } from '@prisma/client';
 
-import Button from '../components/Button';
-import StatusFilter from '../components/StatusFilter';
-import InvoiceCard from '../components/InvoiceCard';
-import LoadingSpinner from '../components/LoadingSpinner';
-import AddInvoice from '../components/AddInvoice/AddInvoice';
+import { Button, StatusFilter, InvoiceCard, LoadingSpinner, AddInvoice } from '../components';
 import nothingThereImg from '../../public/nothing_there.svg';
 import { trpc } from '../utils/trpc';
 

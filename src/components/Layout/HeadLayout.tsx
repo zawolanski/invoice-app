@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-const HeadLayout = () => {
+export const HeadLayout = () => {
   return (
     <Head>
       <title>Invoices</title>
@@ -9,5 +9,3 @@ const HeadLayout = () => {
     </Head>
   );
 };
-
-export default HeadLayout;

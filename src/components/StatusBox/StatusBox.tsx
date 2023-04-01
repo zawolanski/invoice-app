@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 interface Props {
   status: string;
 }
-const StatusBox = ({ status }: Props) => {
+export const StatusBox = ({ status }: Props) => {
   const [colorClasses, setColorClasses] = useState({
     card: 'bg-success/20 text-success',
     dot: 'bg-success',
@@ -31,5 +31,3 @@ const StatusBox = ({ status }: Props) => {
     </p>
   );
 };
-
-export default StatusBox;

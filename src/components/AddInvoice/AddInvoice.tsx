@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 
-import InvoiceForm, { FormValues } from '../InvoiceForm';
+import { InvoiceForm, FormValues } from '../.';
 import { trpc } from '../../utils/trpc';
-import { addDays } from '../../helpers/addDays';
+import { addDays } from '../../helpers';
 
-const AddInvoice = () => {
+export const AddInvoice = () => {
   const router = useRouter();
   const query = router.query;
 
@@ -34,5 +34,3 @@ const AddInvoice = () => {
 
   return <InvoiceForm title="New Invoice" mode="add" isOpen={true} onClose={handleClose} onSubmit={onSubmit} />;
 };
-
-export default AddInvoice;

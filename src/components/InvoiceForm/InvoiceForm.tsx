@@ -5,10 +5,7 @@ import { TrashIcon } from '@heroicons/react/24/solid';
 import { useCallback, useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
-import Button from '../Button';
-import GoBack from '../GoBack';
-import Select from '../Select';
-import Textfield, { textfieldLabelClass } from '../Textfield';
+import { Button, GoBack, Select, Textfield, textfieldLabelClass } from '../.';
 
 export type FormValues = {
   clientName: string;
@@ -49,7 +46,7 @@ interface Props {
   onClose: (val: boolean) => void;
   onSubmit: (data: FormValues, status: 'pending' | 'draft') => void;
 }
-const InvoiceForm = ({ isOpen, onClose, title, mode, onSubmit }: Props) => {
+export const InvoiceForm = ({ isOpen, onClose, title, mode, onSubmit }: Props) => {
   const { register, handleSubmit, control } = useForm<FormValues>();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -223,5 +220,3 @@ const InvoiceForm = ({ isOpen, onClose, title, mode, onSubmit }: Props) => {
     </Dialog>
   );
 };
-
-export default InvoiceForm;

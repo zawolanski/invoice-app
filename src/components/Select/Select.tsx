@@ -2,7 +2,7 @@ import { useController, UseControllerProps } from 'react-hook-form';
 import { Listbox } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
-import { textfieldInputClass, textfieldLabelClass } from '../Textfield';
+import { textfieldInputClass, textfieldLabelClass } from '../.';
 
 type SelectOption = { id: string; name: string };
 
@@ -10,7 +10,7 @@ interface Props extends UseControllerProps {
   options: SelectOption[];
   label: string;
 }
-const Select = ({ name, options, control, defaultValue, rules, shouldUnregister, label }: Props) => {
+export const Select = ({ name, options, control, defaultValue, rules, shouldUnregister, label }: Props) => {
   const {
     field: { value, onChange },
   } = useController({ name, control, defaultValue, rules, shouldUnregister });
@@ -40,5 +40,3 @@ const Select = ({ name, options, control, defaultValue, rules, shouldUnregister,
     </Listbox>
   );
 };
-
-export default Select;

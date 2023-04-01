@@ -9,7 +9,7 @@ interface Props {
   labelClass?: string;
   containerClass?: string;
 }
-const Textfield = ({
+export const Textfield = ({
   label,
   name,
   register,
@@ -41,8 +41,6 @@ const Textfield = ({
     </div>
   );
 };
-
-export default Textfield;
 
 export const textfieldInputClass =
   'placeholder-typography/35 h-12 w-full rounded-[4px] border-[1px] border-border-input bg-transparent px-4 font-bold text-typography outline-none transition-colors hover:border-border-input-active focus:border-border-input-active dark:border-border-dark-input dark:bg-bg-dark-black-active dark:text-white dark:placeholder-white/60 dark:hover:border-border-dark-input-active dark:focus:border-border-dark-input-active';

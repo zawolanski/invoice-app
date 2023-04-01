@@ -4,9 +4,9 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import { SunIcon, MoonIcon, UserIcon } from '@heroicons/react/24/solid';
 
 import logo from '../../public/logo.svg';
-import Button from './Button';
+import { Button } from '../.';
 
-const Header = () => {
+export const Header = () => {
   const { resolvedTheme, setTheme } = useTheme();
   const { data: session, status } = useSession();
 
@@ -56,5 +56,3 @@ const Header = () => {
     </header>
   );
 };
-
-export default Header;

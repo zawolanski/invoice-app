@@ -2,11 +2,8 @@ import { useEffect, useState } from 'react';
 import { Invoice, InvoiceItem } from '@prisma/client';
 import { useRouter } from 'next/router';
 
-import LoadingSpinner from '../components/LoadingSpinner';
-import Button from '../components/Button';
-import StatusBox from '../components/StatusBox';
-import GoBack from '../components/GoBack';
-import { transformDate } from '../helpers/transformDate';
+import { LoadingSpinner, Button, StatusBox, GoBack } from '../components';
+import { transformDate } from '../helpers';
 import { trpc } from '../utils/trpc';
 
 const Invoice = () => {

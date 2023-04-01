@@ -19,7 +19,7 @@ interface Props {
   use?: ButtonUse;
 }
 
-const Button = ({ type = 'button', children, onClick = () => {}, className, use = 'primary' }: Props) => {
+export const Button = ({ type = 'button', children, onClick = () => {}, className, use = 'primary' }: Props) => {
   return (
     <button
       type={type}
@@ -34,5 +34,3 @@ const Button = ({ type = 'button', children, onClick = () => {}, className, use 
     </button>
   );
 };
-
-export default Button;

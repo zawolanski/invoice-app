@@ -7,7 +7,7 @@ interface Props {
   as?: 'a' | 'button';
   onClick?: () => void;
 }
-const GoBack = ({ href = '/', as = 'a', onClick = () => {} }: Props) => {
+export const GoBack = ({ href = '/', as = 'a', onClick = () => {} }: Props) => {
   if (as === 'button')
     return (
       <button onClick={onClick} className="mb-6 flex items-center gap-4 sm:hidden">
@@ -27,5 +27,3 @@ const GoBack = ({ href = '/', as = 'a', onClick = () => {} }: Props) => {
     </Link>
   );
 };
-
-export default GoBack;

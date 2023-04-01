@@ -1,10 +1,9 @@
-import Header from './Header';
-import HeadLayout from './HeadLayout';
+import { Header, HeadLayout } from '../.';
 
 interface Props {
   children: React.ReactNode;
 }
-const Layout = ({ children }: Props) => {
+export const Layout = ({ children }: Props) => {
   return (
     <>
       <HeadLayout />
@@ -15,5 +14,3 @@ const Layout = ({ children }: Props) => {
     </>
   );
 };
-
-export default Layout;

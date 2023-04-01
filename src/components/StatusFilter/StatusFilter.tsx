@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import { Listbox } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
 
 type StatusFilterOption = { id: string; name: string };
 
@@ -9,7 +9,7 @@ interface Props {
   label: React.ReactNode;
   name: string;
 }
-const StatusFilter = ({ label, name, options }: Props) => {
+export const StatusFilter = ({ label, name, options }: Props) => {
   const [selectedItem, setSelectedItem] = useState([] as StatusFilterOption[]);
 
   return (
@@ -35,5 +35,3 @@ const StatusFilter = ({ label, name, options }: Props) => {
     </Listbox>
   );
 };
-
-export default StatusFilter;

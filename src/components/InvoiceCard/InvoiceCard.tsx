@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
 
-import { transformDate } from '../../helpers/transformDate';
-import StatusBox from '../StatusBox';
+import { transformDate } from '../../helpers';
+import { StatusBox } from '../.';
 
 interface Props {
   id: string;
@@ -11,7 +11,7 @@ interface Props {
   amountDue: number;
   paymentDue: Date;
 }
-const InvoiceCard = ({ id, amountDue, clientName: clientsName, paymentDue, status }: Props) => {
+export const InvoiceCard = ({ id, amountDue, clientName: clientsName, paymentDue, status }: Props) => {
   return (
     <Link href={`/${id}`} legacyBehavior>
       <a className="flex cursor-pointer justify-between rounded-lg border-[1px] border-transparent bg-white p-6 transition-colors hover:border-primary dark:bg-bg-black-active sm:gap-6">
@@ -42,5 +42,3 @@ const InvoiceCard = ({ id, amountDue, clientName: clientsName, paymentDue, statu
     </Link>
   );
 };
-
-export default InvoiceCard;
