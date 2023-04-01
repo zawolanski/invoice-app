@@ -79,10 +79,8 @@ export const protectedInvoiceActions = createProtectedRouter()
     },
   })
   .query('fetchUserInvoices', {
-    input: z.string(),
-    async resolve({ ctx, input }) {
-      const userId = input;
-      const invoice = await ctx.prisma.invoice.findMany({ where: { userId: { equals: userId } } });
+    async resolve({ ctx }) {
+      const invoice = await ctx.prisma.invoice.findMany({ where: { userId: { equals: ctx.session.user.id } } });
       return invoice;
     },
   })
@@ -93,6 +91,25 @@ export const protectedInvoiceActions = createProtectedRouter()
       const invoice = await ctx.prisma.invoice.findFirst({ where: { id: { equals: invoiceId } } });
       const items = await ctx.prisma.invoiceItem.findMany({ where: { invoiceId } });
       if (!invoice) return undefined;
+
+      return { ...invoice, items };
+    },
+  })
+  .mutation('delete', {
+    input: z.string(),
+    async resolve({ ctx, input }) {
+      const invoiceId = input;
+      await ctx.prisma.invoice.delete({ where: { id: invoiceId } });
+
+      return null;
+    },
+  })
+  .mutation('markAsPaid', {
+    input: z.string(),
+    async resolve({ ctx, input }) {
+      const invoiceId = input;
+      const invoice = await ctx.prisma.invoice.update({ where: { id: invoiceId }, data: { status: 'paid' } });
+      const items = await ctx.prisma.invoiceItem.findMany({ where: { invoiceId } });
 
       return { ...invoice, items };
     },

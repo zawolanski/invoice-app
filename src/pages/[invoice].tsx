@@ -9,16 +9,25 @@ import { trpc } from '../utils/trpc';
 
 const Invoice = () => {
   const router = useRouter();
-  const { query } = router;
+  const { query, push } = router;
   const invoiceId = (typeof query?.invoice === 'object' ? query?.invoice[0] : query?.invoice) ?? '';
   const { data, isLoading } = trpc.useQuery(['invoice.fetchInvoice', invoiceId]);
+  const { mutate: mutateDelete, isLoading: isLoadingDelete, isSuccess } = trpc.useMutation('invoice.delete');
+  const {
+    mutate: mutateMarkAsPaid,
+    data: dataMarkAsPaid,
+    isLoading: isLoadingMarkAsPaid,
+  } = trpc.useMutation('invoice.markAsPaid');
   const [invoice, setInvoice] = useState<(Invoice & { items: InvoiceItem[] }) | undefined>(undefined);
 
   useEffect(() => {
+    if (isSuccess) push('/');
     if (data) setInvoice(data);
-  }, [data]);
+    if (dataMarkAsPaid) setInvoice(dataMarkAsPaid);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, dataMarkAsPaid, isSuccess]);
 
-  if (isLoading) {
+  if (isLoading || isLoadingDelete || isLoadingMarkAsPaid) {
     return (
       <div className="flex h-[calc(100vh-64px)] items-center justify-center md:h-screen">
         <LoadingSpinner />
@@ -38,10 +47,10 @@ const Invoice = () => {
           <Button use="secondary" onClick={() => console.log('edit')}>
             Edit
           </Button>
-          <Button use="danger" onClick={() => console.log('delete')}>
+          <Button use="danger" onClick={() => mutateDelete(invoiceId)}>
             Delete
           </Button>
-          <Button onClick={() => console.log('make as paid')}>Mark as Paid</Button>
+          <Button onClick={() => mutateMarkAsPaid(invoiceId)}>Mark as Paid</Button>
         </div>
       </div>
       <div className="flex flex-col rounded-lg bg-white p-6 dark:bg-bg-dark-black-active">

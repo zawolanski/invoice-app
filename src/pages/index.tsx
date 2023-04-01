@@ -17,7 +17,7 @@ const options = [
 ];
 
 const Home: NextPage = () => {
-  const { data, isLoading } = trpc.useQuery(['invoice.fetchUserInvoices', 'cl9fwitas0000uv698te6uvoo']);
+  const { data, isLoading } = trpc.useQuery(['invoice.fetchUserInvoices']);
   const router = useRouter();
   const [invoices, setInvoices] = useState<Invoice[]>([]);
 
