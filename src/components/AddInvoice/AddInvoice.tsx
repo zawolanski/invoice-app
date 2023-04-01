@@ -3,12 +3,16 @@ import { useRouter } from 'next/router';
 import { InvoiceForm, FormValues } from '../.';
 import { trpc } from '../../utils/trpc';
 import { addDays } from '../../helpers';
+import { useEffect } from 'react';
 
-export const AddInvoice = () => {
+interface Props {
+  handleIsLoading: (val: boolean) => void;
+}
+export const AddInvoice = ({ handleIsLoading }: Props) => {
   const router = useRouter();
   const query = router.query;
 
-  const { mutate } = trpc.useMutation(['invoice.addInvoice']);
+  const { mutate, isLoading } = trpc.useMutation(['invoice.addInvoice']);
 
   const onSubmit = (data: FormValues, status: 'pending' | 'draft') => {
     mutate({
@@ -25,6 +29,11 @@ export const AddInvoice = () => {
       status,
     });
   };
+
+  useEffect(() => {
+    handleIsLoading(isLoading);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
 
   const handleClose = () => {
     router.replace('/', undefined, { shallow: true });

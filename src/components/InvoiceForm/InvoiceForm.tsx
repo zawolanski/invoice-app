@@ -47,14 +47,20 @@ interface Props {
   onSubmit: (data: FormValues, status: 'pending' | 'draft') => void;
 }
 export const InvoiceForm = ({ isOpen, onClose, title, mode, onSubmit }: Props) => {
-  const { register, handleSubmit, control } = useForm<FormValues>();
+  const { register, handleSubmit, control, reset } = useForm<FormValues>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'items',
   });
 
-  const submitForm = handleSubmit(async (data) => onSubmit(data, 'pending'));
-  const saveAsDraft = handleSubmit(async (data) => onSubmit(data, 'draft'));
+  const submitForm = handleSubmit(async (data) => {
+    onSubmit(data, 'pending');
+    if (mode === 'add') reset();
+  });
+  const saveAsDraft = handleSubmit(async (data) => {
+    onSubmit(data, 'draft');
+    if (mode === 'add') reset();
+  });
   const closeModalOnEsc = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') onClose(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps

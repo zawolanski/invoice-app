@@ -17,9 +17,19 @@ const options = [
 ];
 
 const Home: NextPage = () => {
-  const { data, isLoading } = trpc.useQuery(['invoice.fetchUserInvoices']);
+  const { data, refetch, status, isFetchedAfterMount, isRefetching } = trpc.useQuery(['invoice.fetchUserInvoices']);
   const router = useRouter();
   const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleIsLoading = async (val: boolean) => {
+    setIsLoading(val);
+    await refetch();
+  };
+
+  useEffect(() => {
+    setIsLoading(status === 'loading');
+  }, [status]);
 
   useEffect(() => {
     if (data) setInvoices(data);
@@ -56,7 +66,7 @@ const Home: NextPage = () => {
             </Button>
           </div>
         </div>
-        {!isLoading ? (
+        {!isLoading && isFetchedAfterMount && !isRefetching ? (
           invoices.length > 0 ? (
             <div className="flex flex-col gap-4">
               {invoices.map(({ id, ...invoice }) => (
@@ -79,7 +89,7 @@ const Home: NextPage = () => {
           </div>
         )}
       </div>
-      <AddInvoice />
+      <AddInvoice handleIsLoading={handleIsLoading} />
     </>
   );
 };
