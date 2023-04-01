@@ -3,7 +3,7 @@ import { useTheme } from 'next-themes';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { SunIcon, MoonIcon, UserIcon } from '@heroicons/react/24/solid';
 
-import logo from '../../public/logo.svg';
+import logo from '../../../public/logo.svg';
 import { Button } from '../.';
 
 export const Header = () => {
