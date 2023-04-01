@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { NextPage } from 'next';
+import type { GetServerSidePropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/future/image';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
@@ -8,6 +8,7 @@ import { Invoice } from '@prisma/client';
 import { Button, StatusFilter, InvoiceCard, LoadingSpinner, AddInvoice } from '../components';
 import nothingThereImg from '../../public/nothing_there.svg';
 import { trpc } from '../utils/trpc';
+import { requireAuth } from '../helpers';
 
 const options = [
   { id: 'draft', name: 'Draft' },
@@ -82,5 +83,11 @@ const Home: NextPage = () => {
     </>
   );
 };
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  return requireAuth(context, (session) => ({
+    props: { session },
+  }));
+}
 
 export default Home;

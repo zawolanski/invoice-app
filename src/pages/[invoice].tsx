@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Invoice, InvoiceItem } from '@prisma/client';
 import { useRouter } from 'next/router';
+import { GetServerSidePropsContext } from 'next';
 
 import { LoadingSpinner, Button, StatusBox, GoBack } from '../components';
-import { transformDate } from '../helpers';
+import { requireAuth, transformDate } from '../helpers';
 import { trpc } from '../utils/trpc';
 
 const Invoice = () => {
@@ -134,5 +135,11 @@ const Invoice = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  return requireAuth(context, (session) => {
+    return { props: { session } };
+  });
+}
 
 export default Invoice;
