@@ -36,6 +36,48 @@ export const protectedInvoiceActions = createProtectedRouter()
       return { ...invoice, items };
     },
   })
+  .mutation('editInvoice', {
+    input: z.object({
+      invoiceId: z.string(),
+      clientName: z.string(),
+      status: z.string(),
+      amountDue: z.number(),
+      paymentDue: z.date(),
+      invoiceDate: z.date(),
+      description: z.string(),
+      streetName: z.string(),
+      city: z.string(),
+      postCode: z.string(),
+      country: z.string(),
+      clientStreetName: z.string(),
+      clientCity: z.string(),
+      clientPostCode: z.string(),
+      clientCountry: z.string(),
+      clientEmail: z.string(),
+      items: z
+        .object({
+          itemName: z.string(),
+          quantity: z.number().int().nullish(),
+          price: z.number().nullish(),
+        })
+        .array(),
+    }),
+    async resolve({ ctx, input }) {
+      const { items: inputItems, ...invoiceData } = input;
+      const invoice = await ctx.prisma.invoice.update({
+        where: { id: invoiceData.invoiceId },
+        data: {
+          ...invoiceData,
+          userId: ctx.session.user.id,
+          invoiceItem: { deleteMany: { invoiceId: invoiceData.invoiceId }, createMany: { data: inputItems } },
+        },
+      });
+
+      console.log(invoice);
+
+      return { ...invoice };
+    },
+  })
   .query('fetchUserInvoices', {
     input: z.string(),
     async resolve({ ctx, input }) {

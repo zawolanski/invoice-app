@@ -9,10 +9,8 @@ import Button from '../Button';
 import GoBack from '../GoBack';
 import Select from '../Select';
 import Textfield, { textfieldLabelClass } from '../Textfield';
-import { trpc } from '../../utils/trpc';
-import { addDays } from '../../helpers/addDays';
 
-type FormValues = {
+export type FormValues = {
   clientName: string;
   paymentTerms: {
     id: string;
@@ -46,52 +44,22 @@ const options = [
 
 interface Props {
   isOpen: boolean;
-  setIsOpen: (val: boolean) => void;
   title: React.ReactNode;
   mode: 'add' | 'edit';
+  onClose: (val: boolean) => void;
+  onSubmit: (data: FormValues, status: 'pending' | 'draft') => void;
 }
-const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
-  const { mutate } = trpc.useMutation(['invoice.addInvoice']);
+const InvoiceForm = ({ isOpen, onClose, title, mode, onSubmit }: Props) => {
   const { register, handleSubmit, control } = useForm<FormValues>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'items',
   });
 
-  const onSubmit = handleSubmit(async (data) => {
-    mutate({
-      ...data,
-      invoiceDate: new Date(),
-      paymentDue: addDays(new Date(), data.paymentTerms.value),
-      amountDue:
-        data.items.length > 0
-          ? data.items.reduce(
-              (prev, curr) => (curr.price && curr.quantity ? prev + curr.price * curr.quantity : prev),
-              0
-            )
-          : 0,
-      status: 'pending',
-    });
-  });
-
-  const saveAsDraft = handleSubmit(async (data) => {
-    mutate({
-      ...data,
-      invoiceDate: new Date(),
-      paymentDue: addDays(new Date(), data.paymentTerms.value),
-      amountDue:
-        data.items.length > 0
-          ? data.items.reduce(
-              (prev, curr) => (curr.price && curr.quantity ? prev + curr.price * curr.quantity : prev),
-              0
-            )
-          : 0,
-      status: 'draft',
-    });
-  });
-
+  const submitForm = handleSubmit(async (data) => onSubmit(data, 'pending'));
+  const saveAsDraft = handleSubmit(async (data) => onSubmit(data, 'draft'));
   const closeModalOnEsc = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape') setIsOpen(false);
+    if (e.key === 'Escape') onClose(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -102,12 +70,12 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
 
   return (
     <Dialog open={isOpen} onClose={() => {}} className="relative z-20">
-      <div className="fixed inset-0 bg-black/50" aria-hidden="true" onClick={() => setIsOpen(false)} />
+      <div className="fixed inset-0 bg-black/50" aria-hidden="true" onClick={() => onClose(false)} />
       <div className="fixed inset-0 top-16 box-border flex flex-col bg-bg p-6 pb-20 dark:bg-bg-dark sm:max-w-[38rem] sm:rounded-tr-[26px] sm:rounded-br-[26px] md:top-0 md:max-w-[42rem] md:pl-28">
         <Dialog.Panel className="flex-grow overflow-y-auto pr-3">
-          <GoBack as="button" onClick={() => setIsOpen(false)} />
+          <GoBack as="button" onClick={() => onClose(false)} />
           <Dialog.Title className="mb-6 text-3xl font-bold">{title}</Dialog.Title>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={submitForm}>
             <p className="mb-6 font-bold text-primary">Bill From</p>
 
             <div className="mb-10 flex flex-col gap-4 sm:gap-6">
@@ -231,7 +199,7 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
               <div className="flex h-full items-center justify-end gap-2 p-5">
                 {mode === 'add' ? (
                   <>
-                    <Button use="secondary" onClick={() => setIsOpen(false)}>
+                    <Button use="secondary" onClick={() => onClose(false)}>
                       Discard
                     </Button>
                     <Button use="dark" onClick={saveAsDraft}>
@@ -241,7 +209,7 @@ const InvoiceForm = ({ isOpen, setIsOpen, title, mode }: Props) => {
                   </>
                 ) : (
                   <>
-                    <Button use="secondary" onClick={() => setIsOpen(false)}>
+                    <Button use="secondary" onClick={() => onClose(false)}>
                       Cancel
                     </Button>
                     <Button type="submit">Save Changes</Button>

@@ -7,10 +7,10 @@ import { Invoice } from '@prisma/client';
 
 import Button from '../components/Button';
 import StatusFilter from '../components/StatusFilter';
-import nothingThereImg from '../../public/nothing_there.svg';
-import InvoiceForm from '../components/InvoiceForm';
 import InvoiceCard from '../components/InvoiceCard';
 import LoadingSpinner from '../components/LoadingSpinner';
+import AddInvoice from '../components/AddInvoice/AddInvoice';
+import nothingThereImg from '../../public/nothing_there.svg';
 import { trpc } from '../utils/trpc';
 
 const options = [
@@ -22,7 +22,6 @@ const options = [
 const Home: NextPage = () => {
   const { data, isLoading } = trpc.useQuery(['invoice.fetchUserInvoices', 'cl9fwitas0000uv698te6uvoo']);
   const router = useRouter();
-  const query = router.query;
   const [invoices, setInvoices] = useState<Invoice[]>([]);
 
   useEffect(() => {
@@ -31,10 +30,6 @@ const Home: NextPage = () => {
 
   const handleOpen = () => {
     router.replace('/?form=add', undefined, { shallow: true });
-  };
-
-  const handleClose = () => {
-    router.replace('/', undefined, { shallow: true });
   };
 
   return (
@@ -87,7 +82,7 @@ const Home: NextPage = () => {
           </div>
         )}
       </div>
-      <InvoiceForm title="New Invoice" mode="add" isOpen={query?.form === 'add'} setIsOpen={handleClose} />
+      <AddInvoice />
     </>
   );
 };
